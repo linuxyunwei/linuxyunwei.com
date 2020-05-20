@@ -14,11 +14,18 @@ jobs:
         with:
           hugo-version: "0.70.0"
           extended: true
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: "12"
 
       - name: Build
         # remove --minify tag if you do not need it
         # docs: https://gohugo.io/hugo-pipes/minification/
         run: hugo
+      - name: hugo-algolia
+        run: |
+          npm install hugo-algolia -g
+          hugo-algolia -s
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
