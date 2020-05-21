@@ -571,7 +571,7 @@ rssLimit = 20  # 限制 Rss 文章输出数量
     startLevel = 2
     endLevel = 6
 [permalinks]
-  posts = "/:year/:month/:title/"
+  posts = "/:title/"
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]

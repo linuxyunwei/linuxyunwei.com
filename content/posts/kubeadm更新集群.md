@@ -7,7 +7,7 @@ tags: ['kubernetes', 'kubeadm']
 categories: ['kubernetes']
 ---
 
-前面我们已经通过 [kubeadm 安装了一套集群](/2019/11/kubeadm-安装单master集群/)
+前面我们已经通过 [kubeadm 安装了一套集群](/kubeadm-安装单master集群/)
 
 当时安装的版本为 v1.16.3，现在版本已经更新到 1.18.x 了，所以我们需要对它进行升级
 
