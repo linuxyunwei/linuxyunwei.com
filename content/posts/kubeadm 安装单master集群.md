@@ -114,7 +114,20 @@ Found initrd image: /boot/initramfs-0-rescue-4097349c950a4862a8fab2587d598af7.im
 done
 ```
 
-> 实验环境中由于使用的是普通 PC， 所以还需要安装网卡驱动 `kmod-r8168`, `kmod-r8169`
+### 配置网卡驱动(可选)
+
+> 实验环境中由于使用的是普通 PC，板载网卡为 realtek r8168/r8169, 这个网卡在 5.x 版本内核中由于缺少加载 realtek.ko 模块会造成无法正常识别到网卡的情况
+
+```shell
+$ mkinitrd --force --preload realtek /boot/initramfs-`uname -r`.img `uname -r`
+$ lsinitrd /boot/initramfs-`uname -r`.img | grep realtek
+Arguments: -f --add-drivers ' realtek'
+...
+-rwxr--r--   1 root     root       127880 Jan  7 16:21 usr/lib/modules/5.6.13-1.el7.elrepo.x86_64/kernel/drivers/net/ethernet/realtek/r8169.ko
+-rwxr--r--   1 root     root        27360 Jan  7 16:21 usr/lib/modules/5.6.13-1.el7.elrepo.x86_64/kernel/drivers/net/phy/realtek.ko
+```
+
+确保有加载 `realtek.ko` 和 `r8169.ko` 模块
 
 ### 重启后验证内核版本
 
