@@ -1,0 +1,73 @@
+baseURL: "https://linuxyunwei.com/"
+title: "戴先森的学习笔记"
+languageCode: "zh-CN"
+defaultContentLanguage: "zh-cn"
+enableRobotsTXT: true
+enableEmoji: true
+enableGitInfo: true # 可根据 Git 中的提交生成最近更新记录。
+
+# Highlight options.
+# See https://gohugo.io/content-management/syntax-highlighting/
+pygmentsCodeFences: true
+pygmentsUseClasses: true
+# pygmentsUseClassic: false
+pygmentsCodefencesGuessSyntax: true
+pygmentsStyle: "vs"
+pygmentsOptions: "linenos=table"
+
+theme: "LoveIt"
+hasCJKLanguage: true # 自动检测是否包含 中文\日文\韩文
+rssLimit: 20 # 限制 Rss 文章输出数量
+timeZone: "Asia/Shanghai"
+
+pagination:
+  pagerSize: 5
+  path: page
+
+# copyright: '戴先森 &#183; <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a><br /><a href="http://www.miitbeian.gov.cn/" target="_blank">沪ICP备13017200号-1</a> <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011202011734"><img src="//p.ssl.qhmsg.com/t01d8eda6e551cf2615.png"/>沪公网安备 31011202011734号</p></a>'
+# mainSections: ["posts"]
+
+# Enable author pages
+taxonomies:
+  category: categories
+  series: series
+  tag: tags
+
+permalinks:
+  page:
+    posts: /articles/:year/:month/:slug/
+  section:
+    posts: /articles/
+  term:
+    tags: /:slug/
+
+sitemap:
+  changefreq: "weekly"
+  priority: 0.5
+  filename: "sitemap.xml"
+
+menu:
+  main:
+    - name: "首页"
+      weight: 10
+      identifier: "home"
+      url: "/"
+    - name: "文章列表"
+      weight: 20
+      identifier: "posts"
+      url: "/posts/"
+    - name: "标签"
+      weight: 30
+      identifier: "tags"
+      url: "/tags/"
+    - name: "分类"
+      weight: 40
+      identifier: "categories"
+      url: "/categories/"
+  footer:
+    - name: Terms
+      pageRef: /terms
+      weight: 10
+    - name: Privacy
+      pageRef: /privacy
+      weight: 20
