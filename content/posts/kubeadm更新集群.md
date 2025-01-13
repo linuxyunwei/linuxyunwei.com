@@ -56,7 +56,7 @@ $ kubeadm upgrade plan
 [upgrade/config] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -oyaml'
 [preflight] Running pre-flight checks.
 [preflight] Some fatal errors occurred:
-	[ERROR CoreDNSUnsupportedPlugins]: there are unsupported plugins in the CoreDNS Corefile
+ [ERROR CoreDNSUnsupportedPlugins]: there are unsupported plugins in the CoreDNS Corefile
 [preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
 To see the stack trace of this error execute with --v=5 or higher
 ```
@@ -66,7 +66,7 @@ To see the stack trace of this error execute with --v=5 or higher
 通过如下命令查看 CoreDNS 的配置文件，如果确认没有问题可以通过参数 `--ignore-preflight-errors=CoreDNSUnsupportedPlugins`忽略，github 上也有相关[issue](https://github.com/kubernetes/kubernetes/issues/82889)
 
 ```shell
-$ kubectl get configmap -n kube-system coredns -oyaml
+kubectl get configmap -n kube-system coredns -oyaml
 ```
 
 此处选择忽略再次重试
@@ -77,7 +77,7 @@ $ kubeadm upgrade plan --ignore-preflight-errors=CoreDNSUnsupportedPlugins
 [upgrade/config] Reading configuration from the cluster...
 [upgrade/config] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -oyaml'
 [preflight] Running pre-flight checks.
-	[WARNING CoreDNSUnsupportedPlugins]: there are unsupported plugins in the CoreDNS Corefile
+ [WARNING CoreDNSUnsupportedPlugins]: there are unsupported plugins in the CoreDNS Corefile
 [upgrade] Making sure the cluster is healthy:
 [upgrade] Fetching available versions to upgrade to
 [upgrade/versions] Cluster version: v1.16.3
@@ -102,7 +102,7 @@ Etcd                 3.3.15    3.3.17-0
 
 You can now apply the upgrade by executing the following command:
 
-	kubeadm upgrade apply v1.16.9
+ kubeadm upgrade apply v1.16.9
 
 _____________________________________________________________________
 
@@ -122,7 +122,7 @@ Etcd                 3.3.15    3.4.3-0
 
 You can now apply the upgrade by executing the following command:
 
-	kubeadm upgrade apply v1.17.5
+ kubeadm upgrade apply v1.17.5
 
 _____________________________________________________________________
 ```
@@ -135,7 +135,7 @@ $ kubeadm upgrade apply v1.17.5 --ignore-preflight-errors=CoreDNSUnsupportedPlug
 [upgrade/config] Reading configuration from the cluster...
 [upgrade/config] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -oyaml'
 [preflight] Running pre-flight checks.
-	[WARNING CoreDNSUnsupportedPlugins]: there are unsupported plugins in the CoreDNS Corefile
+ [WARNING CoreDNSUnsupportedPlugins]: there are unsupported plugins in the CoreDNS Corefile
 [upgrade] Making sure the cluster is healthy:
 [upgrade/version] You have chosen to change the cluster version to "v1.17.5"
 [upgrade/versions] Cluster version: v1.16.3
@@ -248,15 +248,15 @@ node/k8s-master uncordoned
 > 本次集群只有单个 master,以下操作纯做记录
 
 ```shell
-$ yum install -y kubeadm-1.17.5-0 --disableexcludes=kubernetes
-$ kubeadm upgrade node
-$ kubeadm upgrade apply
+yum install -y kubeadm-1.17.5-0 --disableexcludes=kubernetes
+kubeadm upgrade node
+kubeadm upgrade apply
 ```
 
 ### 升级所有 master 节点的 kubectl 与 kubelet
 
 ```shell
-$ yum install -y kubectl-1.17.5-0 kubelet-1.17.5-0 --disableexcludes=kubernetes
+yum install -y kubectl-1.17.5-0 kubelet-1.17.5-0 --disableexcludes=kubernetes
 ```
 
 ### 重启 master 节点 kubelet 服务

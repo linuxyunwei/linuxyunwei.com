@@ -292,7 +292,7 @@ $ systemctl enable --now chronyd
 docker 官方提供了脚本用于检查内核相关配置
 
 {{< highlight shell "linenos=table,hl_lines=9" >}}
-\$ curl -fsSL https://raw.githubusercontent.com/moby/moby/master/contrib/check-config.sh | bash -s
+\$ curl -fsSL <https://raw.githubusercontent.com/moby/moby/master/contrib/check-config.sh> | bash -s
 info: reading kernel config from /boot/config-3.10.0-1062.4.3.el7.x86_64 ...
 
 Generally Necessary:
@@ -896,7 +896,7 @@ curl -O https://docs.projectcalico.org/manifests/calico.yaml
 ### 部署
 
 ```shell
-$ kubectl apply -f caclico.yml
+kubectl apply -f caclico.yml
 ```
 
 ### 通过 calicoctl 查看 BGP 节点状态
@@ -975,9 +975,9 @@ calico 支持通过 `WireGuard` 对节点之间的流量进行加密传输(仅�
 安装 WireGuard 可参考 [WireGuard Installation](https://www.wireguard.com/install/)
 
 ```shell
-$ yum install epel-release https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm
-$ yum install yum-plugin-elrepo
-$ yum install kmod-wireguard wireguard-tools
+yum install epel-release https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm
+yum install yum-plugin-elrepo
+yum install kmod-wireguard wireguard-tools
 ```
 
 加载 WireGuard 内核模块
