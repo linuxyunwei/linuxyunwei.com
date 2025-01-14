@@ -35,7 +35,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         if: github.ref == 'refs/heads/master'
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.TOKEN }}
           publish_dir: ./public
           external_repository: linuxyunwei/linuxyunwei.github.io
           publish_branch: master
