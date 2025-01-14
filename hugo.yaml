@@ -6,25 +6,21 @@ enableRobotsTXT: true
 enableEmoji: true
 enableGitInfo: true # 可根据 Git 中的提交生成最近更新记录。
 
-# Highlight options.
-# See https://gohugo.io/content-management/syntax-highlighting/
-pygmentsCodeFences: true
-pygmentsUseClasses: true
-# pygmentsUseClassic: false
-pygmentsCodefencesGuessSyntax: true
-pygmentsStyle: "vs"
-pygmentsOptions: "linenos=table"
-
-theme: "LoveIt"
+theme: "PaperMod"
 hasCJKLanguage: true # 自动检测是否包含 中文\日文\韩文
 rssLimit: 20 # 限制 Rss 文章输出数量
 timeZone: "Asia/Shanghai"
+pygmentsUseClasses: true
+
+buildDrafts: false
+buildFuture: false
+buildExpired: false
 
 pagination:
   pagerSize: 5
   path: page
 
-# copyright: '戴先森 &#183; <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a><br /><a href="http://www.miitbeian.gov.cn/" target="_blank">沪ICP备13017200号-1</a> <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011202011734"><img src="//p.ssl.qhmsg.com/t01d8eda6e551cf2615.png"/>沪公网安备 31011202011734号</p></a>'
+copyright: '戴先森 &#183; <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a> <a href="http://www.miitbeian.gov.cn/" target="_blank">沪ICP备13017200号-1</a> <a target="_blank" rel="noreferrer" href="https://beian.mps.gov.cn/#/query/webSearch?code=31011702890206">沪公网安备31011702890206号</a><br />'
 # mainSections: ["posts"]
 
 # Enable author pages
@@ -33,34 +29,30 @@ taxonomies:
   series: series
   tag: tags
 
-permalinks:
-  page:
-    posts: /articles/:year/:month/:slug/
-  section:
-    posts: /articles/
-  term:
-    tags: /:slug/
-
 sitemap:
   changefreq: "weekly"
   priority: 0.5
   filename: "sitemap.xml"
 
+minify:
+  disableXML: true
+  minifyOutput: true
+
 menu:
   main:
-    - name: "首页"
+    - name: "Home"
       weight: 10
       identifier: "home"
       url: "/"
-    - name: "文章列表"
+    - name: "Articles"
       weight: 20
-      identifier: "posts"
-      url: "/posts/"
-    - name: "标签"
+      identifier: "articles"
+      url: "/articles/"
+    - name: "Tags"
       weight: 30
       identifier: "tags"
       url: "/tags/"
-    - name: "分类"
+    - name: "Categories"
       weight: 40
       identifier: "categories"
       url: "/categories/"
@@ -71,3 +63,66 @@ menu:
     - name: Privacy
       pageRef: /privacy
       weight: 20
+markup:
+  defaultMarkdownHandler: goldmark
+  highlight:
+    codeFences: true
+    guessSyntax: true
+    style: catppuccin-macchiato
+    lineNumbersInTable: true
+    lineNoStart: 1
+    lineNos: false
+    noClasses: false
+  tableOfContents:
+    endLevel: 3
+    ordered: false
+    startLevel: 2
+  goldmark:
+    renderer:
+      unsafe: true
+outputFormats:
+  RSS:
+    baseName: rss
+  # 生成 Algolia 索引文件
+  # Build indexes of Aloglia
+  AlgoliaIndexes:
+    mediaType: application/json
+    baseName: algolia
+    isPlainText: true
+    notAlternative: true
+outputs:
+  home: ["HTML", "RSS"]
+params:
+  env: "production"
+  title: "戴先森的学习笔记"
+  author: "Xijun Dai"
+  defaultTheme: "auto" # auto/light/dark
+  disableThemeToggle: false
+
+  ShowReadingTime: true
+  ShowShareButtons: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: false
+  ShowWordCount: true
+  ShowRssButtonInSectionTermList: true
+  UseHugoToc: true
+  disableSpecial1stPost: false
+  disableScrollToTop: false
+  comments: false
+  hidemeta: false
+  hideSummary: false
+  showtoc: true
+  tocopen: false
+
+  assets:
+    disableHLJS: true # to disable highlight.js
+
+  editPost:
+    URL: "https://github.com/linuxyunwei/linuxyunwei.com/tree/master/content"
+    Text: "修正错误" # edit text
+    appendFilePath: true # to append file path to Edit link
+
+  homeInfoParams:
+    Title: "Hi there \U0001F44B"
+    Content: Welcome to my blog

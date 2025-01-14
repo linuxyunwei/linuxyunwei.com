@@ -2,36 +2,41 @@ name: build-and-deploy
 on: push
 jobs:
   deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: true
+          fetch-depth: 0
 
       - name: Setup hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "0.70.0"
-          extended: true
-      - uses: actions/setup-node@v2-beta
+          hugo-version: "0.140.2"
+          # extended: true
+
+      - uses: actions/setup-node@v4
         with:
-          node-version: "12"
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
 
       - name: Build
         # remove --minify tag if you do not need it
         # docs: https://gohugo.io/hugo-pipes/minification/
-        run: hugo
-      - name: hugo-algolia
-        run: |
-          npm install hugo-algolia -g
-          hugo-algolia -s
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        run: hugo --minify
+      - uses: caibingcheng/hugo-algolia2@v1
         with:
-          personal_token: ${{ secrets.TOKEN }}
-          external_repository: linuxyunwei/linuxyunwei.github.io
+          index: linuxyunwei.com
+          apikey: ${{ secrets.ALGOLIA_APIKEY }}
+          appid: ${{ secrets.ALGOLIA_APPID }}
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/master'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          #   keep_files: true
+          external_repository: linuxyunwei/linuxyunwei.github.io
           publish_branch: master
           cname: linuxyunwei.com
