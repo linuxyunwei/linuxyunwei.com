@@ -24,10 +24,17 @@ copyright: '戴先森 &#183; <a rel="license noopener" href="https://creativecom
 # mainSections: ["posts"]
 
 # Enable author pages
-taxonomies:
-  category: categories
-  series: series
-  tag: tags
+# taxonomies:
+#   category: categories
+#   series: series
+#   article: articles
+#   tag: tags
+
+permalinks:
+  page:
+    posts: "/:year/:month/:day/:slug/"
+  section:
+    posts: /articles/
 
 sitemap:
   changefreq: "weekly"

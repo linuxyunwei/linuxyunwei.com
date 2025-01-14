@@ -3,8 +3,11 @@ title: 'kubeadm 安装单master集群'
 date: 2019-11-18T19:12:02+08:00
 description: ''
 draft: false
-tags: ['kubernetes']
-categories: ['kubernetes']
+tags:
+  - kubeadm
+  - kubernetes
+categories:
+  - kubernetes
 ---
 
 ## 环境准备

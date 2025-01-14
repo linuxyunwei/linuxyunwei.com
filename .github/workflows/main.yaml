@@ -28,7 +28,7 @@ jobs:
         with:
           index: blog
           baseurl: https://linuxyunwei.com/
-          uri: /posts/:slug/
+          uri: /:year/:month/:day/:slug/
           apikey: ${{ secrets.ALGOLIA_APIKEY }}
           appid: ${{ secrets.ALGOLIA_APPID }}
       - name: Deploy

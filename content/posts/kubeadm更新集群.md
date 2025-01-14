@@ -3,11 +3,14 @@ title: '使用Kubeadm更新集群'
 date: 2020-05-20T19:17:26+08:00
 description: ''
 draft: false
-tags: ['kubernetes', 'kubeadm']
-categories: ['kubernetes']
+tags:
+  - kubeadm
+  - kubernetes
+categories:
+  - kubernetes
 ---
 
-前面我们已经通过 [kubeadm 安装了一套集群](/2019/11/kubeadm-安装单master集群/)
+前面我们已经通过 [kubeadm 安装了一套集群](/posts/kubeadm-安装单master集群/)
 
 当时安装的版本为 v1.16.3，现在版本已经更新到 1.18.x 了，所以我们需要对它进行升级
 
