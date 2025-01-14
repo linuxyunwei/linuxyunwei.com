@@ -26,7 +26,9 @@ jobs:
         run: hugo --minify
       - uses: caibingcheng/hugo-algolia2@v1
         with:
-          index: linuxyunwei.com
+          index: blog
+          baseurl: https://linuxyunwei.com/
+          uri: /posts/:slug/
           apikey: ${{ secrets.ALGOLIA_APIKEY }}
           appid: ${{ secrets.ALGOLIA_APPID }}
       - name: Deploy
