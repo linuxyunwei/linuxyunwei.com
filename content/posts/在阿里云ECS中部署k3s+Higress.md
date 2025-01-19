@@ -1,7 +1,7 @@
 ---
 title: 在阿里云ECS中部署k3s+Higress
-date: 2025-01-14 00:47
-lastmod: 2025-01-14 10:31:22
+date: 2025-01-14T00:47:00+08:00
+lastmod: 2025-01-14T10:31:22+08:00
 showToc: true
 TocOpen: false
 ShowReadingTime: true
@@ -10,23 +10,24 @@ ShowPostNavLinks: true
 ShowWordCount: true
 ShowRssButtonInSectionTermList: true
 UseHugoToc: true
-tags: 
-categories: 
+tags:
+categories:
 share: true
 draft: false
-dir: ""
-description: ""
+dir: ''
+description: ''
 author: Xijun Dai
 ---
-去年阿里云搞活动的时候99/年(续费不涨价)购买了一台2核2G的ECS一直空放着没有使用， 最近收到短信提示要到期了。就想着用来干点啥，工作中习惯了使用K8s管理业务，就先考虑部署一套k3s环境，具体用来做什么后面再说 -_-\\ 
+
+去年阿里云搞活动的时候 99/年(续费不涨价)购买了一台 2 核 2G 的 ECS 一直空放着没有使用， 最近收到短信提示要到期了。就想着用来干点啥，工作中习惯了使用 K8s 管理业务，就先考虑部署一套 k3s 环境，具体用来做什么后面再说 -\_-\\
 
 ## 初始化操作系统
 
-登录到阿里云ECS控制台，找到需要配置的ECS， 选择 `全部操作` -> `云盘与镜像` -> `更换操作系统`进行更换操作系统
+登录到阿里云 ECS 控制台，找到需要配置的 ECS， 选择 `全部操作` -> `云盘与镜像` -> `更换操作系统`进行更换操作系统
 
 ![](https://static.linuxyunwei.com/images/20250118175050203.png)
 
-由于我的ECS还处于运行中的状态， 这里需要先关机
+由于我的 ECS 还处于运行中的状态， 这里需要先关机
 
 ![image.png](https://static.linuxyunwei.com/images/20250118175847780.png)
 
@@ -34,21 +35,20 @@ author: Xijun Dai
 
 ![image.png](https://static.linuxyunwei.com/images/20250118180025137.png)
 
-
-待ECS关机之后 ， 选择`继续更换操作` 
+待 ECS 关机之后 ， 选择`继续更换操作`
 ![image.png](https://static.linuxyunwei.com/images/20250118180103413.png)
 
-选好发行版之后点击下方的 `确认订单`, 这里我选择了 Ubuntu 24.04 
+选好发行版之后点击下方的 `确认订单`, 这里我选择了 Ubuntu 24.04
 ![image.png](https://static.linuxyunwei.com/images/20250118180259473.png)
 
-##  部署 k3s
+## 部署 k3s
 
-> 官网安装脚本地址是 [https://get.k3s.io](https://get.k3s.io/) , 在大陆地区可以使用 https://rancher-mirror.rancher.cn/k3s/k3s-install.sh 代替
+> 官网安装脚本地址是 [https://get.k3s.io](https://get.k3s.io/) , 在大陆地区可以使用 <https://rancher-mirror.rancher.cn/k3s/k3s-install.sh> 代替
 
-找到ECS的公网及私网IP，后面会用到
+找到 ECS 的公网及私网 IP，后面会用到
 ![image.png](https://static.linuxyunwei.com/images/20250118181038018.png)
 
-通过终端工具 SSH 登录到服务器上安装k3s
+通过终端工具 SSH 登录到服务器上安装 k3s
 
 > 这里所有的操作均基于 `root` 用户身份执行，如果更换操作系统时 `安全设置`里的`登录名`选择的是 `ecs-user`, 这里可以先使用 `sudo -i` 命令切换到 `root`
 
@@ -84,11 +84,12 @@ Created symlink /etc/systemd/system/multi-user.target.wants/k3s.service → /etc
 ```
 
 参数说明:
+
 - **--disable-network-policy**: 禁用网络策略，单机环境不需要开启
 - **--disable-helm-controller**: 禁用自带的 helm 控制器， 服务都是需要外部工具部署的，暂时用不上
 - **--disable=traefik**: 禁用默认的 traefik 网关，可以多次指定需要禁用的组件，如 `coredns`, `metrics-server`,`local-storage`,`servicelb`。个人不习惯使用 `traefik` 所以先禁用，后面使用 [higress](https://higress.cn)来代替
-- **--node-external-ip**: 指定ECS的公网IP
-- **--node-ip**: 指定ECS的内网(VPC)IP
+- **--node-external-ip**: 指定 ECS 的公网 IP
+- **--node-ip**: 指定 ECS 的内网(VPC)IP
 - **--system-default-registry**: 默认情况下所有未指定仓库地址的镜像都是从 dockerhub 官方仓库拉取的，在国内环境或部分企业内网可能会无法正常访问到，可以通过这个参数指定代理仓库地址
 
 查看集群运行状态
@@ -106,7 +107,6 @@ kube-system   metrics-server-568d68f85d-s5q4k           1/1     Running   0     
 Higress 的部署方式可以参考官网的 [hgctl 工具使用说明](https://higress.cn/docs/latest/ops/hgctl/) 和 [使用 Helm 进行云原生部署](https://higress.cn/docs/latest/ops/deploy-by-helm/)
 
 我这里使用 kustomize + helm 结合的方式来管理部署
-
 
 ```shell
 ## 创建目录用于存储配置文件
@@ -133,13 +133,14 @@ higress.io/higress-core         2.0.6           2.0.6           Helm chart for d
 $ helm show values higress.io/higress-core | tee values.yaml
 ```
 
-> 注意，我这里使用的是 higress.io/higress-core, 是因为 higress.io/higress 包含了 core 和 console(UI) 这两部分，我这里暂时用不着 console 
+> 注意，我这里使用的是 higress.io/higress-core, 是因为 higress.io/higress 包含了 core 和 console(UI) 这两部分，我这里暂时用不着 console
 
 修改完成后的 values.yaml 文件内容如下:
+
 ```yaml
 global:
   ingressClass: higress
-  watchNamespace: ""
+  watchNamespace: ''
   disableAlpnH2: true
   enableStatus: true
   # whether to use autoscaling/v2 template for HPA settings
@@ -151,7 +152,7 @@ global:
 
 meshConfig:
   enablePrometheusMerge: true
-  rootNamespace: ""
+  rootNamespace: ''
   trustDomain: cluster.local
 gateway:
   replicas: 1 ## ECS配置较低，我这里改成了1个pod，建议最少保持2个
@@ -181,7 +182,8 @@ pilot:
       memory: 64Mi
 ```
 
-定义创建名为 `higress-system` 的命名空间， 文件名 `namespace.yaml` 
+定义创建名为 `higress-system` 的命名空间， 文件名 `namespace.yaml`
+
 ```yaml
 ## file: namespace.yaml
 apiVersion: v1
@@ -191,6 +193,7 @@ metadata:
 ```
 
 创建 kustomize 的配置文件 `kustomization.yaml`, 内容如下:
+
 ```yaml
 # file: kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -221,11 +224,13 @@ $ tree -l
 ```
 
 查看渲染后的内容是否符合预期
+
 ```shell
-$ kubectl kustomize --enable-helm .
+kubectl kustomize --enable-helm .
 ```
 
-确认无误后部署到k3s集群
+确认无误后部署到 k3s 集群
+
 ```shell
 ## 注意: 这里因为使用 kustomize 管理了 helmChart, 所以不能直接使用 kubectl apply -k 来部署
 $ kubectl kustomize --enable-helm . | kubectl apply -f -
@@ -260,7 +265,8 @@ error: resource mapping not found for name: "higress-gateway-global-custom-respo
 ensure CRDs are installed first
 ```
 
-查看部署状态 
+查看部署状态
+
 ```shell
 $ kubectl get pods -A
 NAMESPACE        NAME                                      READY   STATUS    RESTARTS   AGE
@@ -275,10 +281,10 @@ higress-controller   ClusterIP      10.43.239.208   <none>          8888/TCP,888
 higress-gateway      LoadBalancer   10.43.18.51     101.37.18.109   80:31368/TCP,443:31372/TCP                                          4m44s
 ```
 
-
 ## 验证网关
 
 这里部署个 httpbin 验证下网关， 以 istio 中提供的配置为例，因国内环境无法直接拉取到 docker.io 的镜像，所以我们先把 yaml 文件 copy 下来修改下镜像仓库地址，这里替换为阿里云的专属镜像加速器地址，修改后的文件内容如下:
+
 ```yaml
 # Copyright Istio Authors
 #
@@ -311,9 +317,9 @@ metadata:
     service: httpbin
 spec:
   ports:
-  - name: http
-    port: 8000
-    targetPort: 8080
+    - name: http
+      port: 8000
+      targetPort: 8080
   selector:
     app: httpbin
 ---
@@ -335,12 +341,12 @@ spec:
     spec:
       serviceAccountName: httpbin
       containers:
-      ## 这里将 docker.io 替换为 dockerproxy.net
-      - image: dockerproxy.net/mccutchen/go-httpbin:v2.15.0
-        imagePullPolicy: IfNotPresent
-        name: httpbin
-        ports:
-        - containerPort: 8080
+        ## 这里将 docker.io 替换为 dockerproxy.net
+        - image: dockerproxy.net/mccutchen/go-httpbin:v2.15.0
+          imagePullPolicy: IfNotPresent
+          name: httpbin
+          ports:
+            - containerPort: 8080
 ```
 
 部署 httpbin 到集群
@@ -357,6 +363,7 @@ httpbin-5f4ffff868-9m5hn   1/1     Running   0          5s
 ```
 
 生成 Ingress 路由配置， 内容如下:
+
 ```yaml
 # file: ingress.yaml
 apiVersion: networking.k8s.io/v1
@@ -364,21 +371,21 @@ kind: Ingress
 metadata:
   name: httpbin
 spec:
-  ingressClassName: higress ## 这里指定使用 higress 
+  ingressClassName: higress ## 这里指定使用 higress
   rules:
-  - host: httpbin.linuxyunwei.com ## 访问域名
-    http:
-      paths:
-      - backend:
-          service:
-            name: httpbin
-            port:
-              number: 8000
-        path: /
-        pathType: Prefix
+    - host: httpbin.linuxyunwei.com ## 访问域名
+      http:
+        paths:
+          - backend:
+              service:
+                name: httpbin
+                port:
+                  number: 8000
+            path: /
+            pathType: Prefix
   tls:
-  - hosts:
-    - httpbin.linuxyunwei.com
+    - hosts:
+        - httpbin.linuxyunwei.com
 ```
 
 > 注意看上面的 Ingress 中，我们并没有指定 tls 的 secretName ， 后面我会通过 higress 的 automaticHttps 功能对接 let's encrypt 自动签发证书
@@ -396,7 +403,7 @@ httpbin   higress  httpbin.linuxyunwei.com   101.37.18.109    80, 443   4s
 添加 DNS 解析记录，这里以阿里云为例
 ![image.png](https://static.linuxyunwei.com/images/20250119121102792.png)
 
-待DNS生效后可以尝试使用 curl 访问
+待 DNS 生效后可以尝试使用 curl 访问
 
 ```shell
 $ nslookup httpbin.linuxyunwei.com
@@ -470,7 +477,7 @@ data:
     - domains:
       - httpbin.linuxyunwei.com  ## 添加自己的域名,可以有多个
       tlsSecret: httpbin-linuxyunwei-com-tls  ## 用来存储证书的 secret 名称
-      tlsIssuer: letsencrypt    ## 指定使用 let's encrypt 
+      tlsIssuer: letsencrypt    ## 指定使用 let's encrypt
     fallbackForInvalidSecret: true
     renewBeforeDays: 30
     version: "20250118113351"
